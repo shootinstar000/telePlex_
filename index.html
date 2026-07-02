@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>telePlex | Streaming Revolutionized</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root { --brand-purple: #7c3aed; --dark-bg: #050505; }
+        body { background-color: var(--dark-bg); color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .purple-gradient { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); }
+        .text-gradient { background: linear-gradient(to right, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .feature-card:hover { border-color: var(--brand-purple); transform: translateY(-5px); transition: all 0.3s ease; }
+        .mockup-container { position: relative; max-width: 300px; margin: auto; }
+        .mockup-img { border-radius: 2.5rem; border: 8px solid #18181b; box-shadow: 0 0 50px rgba(124, 58, 237, 0.2); }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 glass py-4 px-6 md:px-20 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 purple-gradient rounded-lg flex items-center justify-center"><i class="fas fa-play text-xs"></i></div>
+            <span class="text-xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+            <a href="#features" class="hover:text-white">Features</a>
+            <a href="#gallery" class="hover:text-white">Gallery</a>
+            <a href="#download" class="hover:text-white">Download</a>
+        </div>
+        <a href="#download" class="purple-gradient px-5 py-2 rounded-full text-sm font-bold shadow-lg shadow-purple-500/20">Install App</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative pt-40 pb-20 px-6 text-center overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-purple-600/20 blur-[120px] rounded-full -z-10"></div>
+        <div data-aos="fade-up">
+            <h1 class="text-5xl md:text-8xl font-black mb-6 tracking-tight">
+                Your Telegram. <br><span class="text-gradient">Evolved.</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-10 leading-relaxed">
+                Why just download when you can stream? telePlex transforms your Telegram channels into a stunning, organized media library. High speed, no clutter.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <button class="purple-gradient flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition">
+                    <i class="fab fa-android text-2xl"></i> Download APK v1.0.0
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES WITH SCREENSHOTS -->
+    <section id="features" class="py-20 px-6 md:px-20 space-y-32">
+        
+        <!-- Feature 1 -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="mockup-container" data-aos="fade-right">
+                <img src="assets/discover.png" class="mockup-img" alt="Discovery Screen">
+            </div>
+            <div data-aos="fade-left">
+                <span class="text-purple-500 font-bold tracking-widest uppercase text-sm">Experience</span>
+                <h2 class="text-4xl font-bold mt-2 mb-6">A Premium Discovery Engine</h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Browse through Global and Indian cinema with ease. Our interface organizes content by genre, trending status, and streaming platform origin. No more scrolling through endless Telegram chat history.
+                </p>
+                <ul class="mt-6 space-y-3 text-gray-300">
+                    <li><i class="fas fa-check text-purple-500 mr-2"></i> Clean, Tabbed Navigation</li>
+                    <li><i class="fas fa-check text-purple-500 mr-2"></i> Indian & Global Cinema toggles</li>
+                    <li><i class="fas fa-check text-purple-500 mr-2"></i> Real-time Trending Updates</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1" data-aos="fade-right">
+                <span class="text-purple-500 font-bold tracking-widest uppercase text-sm">Metadata</span>
+                <h2 class="text-4xl font-bold mt-2 mb-6">Everything You Need to Know</h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Powered by advanced fetching technology, telePlex provides full movie details. View IMDb ratings, release years, cast members, and detailed plot overviews before you hit play.
+                </p>
+                <div class="grid grid-cols-2 gap-4 mt-8">
+                    <div class="glass p-4 rounded-xl border-l-4 border-purple-500">
+                        <h4 class="font-bold">Cast Details</h4>
+                        <p class="text-xs text-gray-500">Full actor profiles</p>
+                    </div>
+                    <div class="glass p-4 rounded-xl border-l-4 border-purple-500">
+                        <h4 class="font-bold">Watch Progress</h4>
+                        <p class="text-xs text-gray-500">Resume where you left</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mockup-container order-1 md:order-2" data-aos="fade-left">
+                <img src="assets/details.png" class="mockup-img" alt="Details Screen">
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="mockup-container" data-aos="fade-right">
+                <img src="assets/sources.png" class="mockup-img" alt="Sources Screen">
+            </div>
+            <div data-aos="fade-left">
+                <span class="text-purple-500 font-bold tracking-widest uppercase text-sm">Control</span>
+                <h2 class="text-4xl font-bold mt-2 mb-6">Choose Your Quality</h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    TelePlex intelligently scrapes multiple sources from your joined channels. Whether you want 480p for data saving or 4K for the big screen, the choice is yours.
+                </p>
+                <div class="mt-8 flex gap-3">
+                    <span class="px-4 py-2 bg-zinc-800 rounded-full text-xs font-bold">1080p HEVC</span>
+                    <span class="px-4 py-2 bg-zinc-800 rounded-full text-xs font-bold">4K WEB-DL</span>
+                    <span class="px-4 py-2 bg-zinc-800 rounded-full text-xs font-bold">Multi-Audio</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- GALLERY GRID -->
+    <section id="gallery" class="py-20 px-6 md:px-20 bg-zinc-950">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold">Gallery</h2>
+            <p class="text-gray-500 mt-2">Beautifully crafted UI for the modern user.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <!-- Add all your screenshots here -->
+            <img src="assets/hero.png" class="rounded-2xl border border-zinc-800 hover:scale-105 transition cursor-pointer" data-aos="zoom-in">
+            <img src="assets/player.png" class="rounded-2xl border border-zinc-800 hover:scale-105 transition cursor-pointer" data-aos="zoom-in" data-aos-delay="100">
+            <img src="assets/library.png" class="rounded-2xl border border-zinc-800 hover:scale-105 transition cursor-pointer" data-aos="zoom-in" data-aos-delay="200">
+            <img src="assets/settings.png" class="rounded-2xl border border-zinc-800 hover:scale-105 transition cursor-pointer" data-aos="zoom-in" data-aos-delay="300">
+            <img src="assets/search.png" class="rounded-2xl border border-zinc-800 hover:scale-105 transition cursor-pointer" data-aos="zoom-in" data-aos-delay="400">
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="download" class="py-32 px-6 text-center relative">
+        <div class="max-w-4xl mx-auto glass p-16 rounded-[4rem] border-purple-500/30 overflow-hidden">
+            <div class="absolute -top-24 -left-24 w-64 h-64 bg-purple-600/20 blur-[100px] rounded-full"></div>
+            <h2 class="text-4xl md:text-6xl font-black mb-8">Revolutionize your <br>watch habits.</h2>
+            <p class="text-gray-400 mb-12 text-lg">Download telePlex today and see the difference.</p>
+            <button class="purple-gradient px-12 py-5 rounded-2xl font-bold text-xl hover:scale-105 transition shadow-2xl shadow-purple-600/40">
+                Download Latest APK
+            </button>
+            <p class="mt-6 text-zinc-600 text-sm italic">Supports Android 8.0 and above</p>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-zinc-600 text-sm border-t border-zinc-900">
+        <p>© 2024 telePlex. We do not host any media files on our servers.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+</body>
+</html>
