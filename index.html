@@ -47,7 +47,7 @@
         }
         .phone-mockup img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Landscape Player Carousel Swiper Styles (FIXED) */
+        /* Landscape Player Carousel Swiper Styles */
         .playerSwiper { width: 100%; height: 100%; }
         .playerSwiper .swiper-slide { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .playerSwiper img { width: 100%; height: 100%; object-fit: cover; }
@@ -86,32 +86,14 @@
         </div>
     </section>
 
-    <!-- FEATURES -->
-    <section class="py-12 sm:py-20 px-4 sm:px-6 md:px-24">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            <div class="glass-card p-6 sm:p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition">
-                    <i class="fas fa-folder-open text-purple-500 text-xl sm:text-2xl"></i>
-                </div>
-                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Channel Browser</h3>
-                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Browse every media file from your favorite Telegram groups and channels in a clean, scrollable interface. No more digging through chats.</p>
-            </div>
-            
-            <div class="glass-card p-6 sm:p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="100">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition">
-                    <i class="fas fa-clapperboard text-purple-500 text-xl sm:text-2xl"></i>
-                </div>
-                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Rich Metadata</h3>
-                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Get the full story. telePlex automatically fetches movie posters, IMDb ratings, cast details, and detailed overviews for a premium look.</p>
-            </div>
-
-            <div class="glass-card p-6 sm:p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="200">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition">
-                    <i class="fas fa-bolt text-purple-500 text-xl sm:text-2xl"></i>
-                </div>
-                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Direct Streaming</h3>
-                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Why wait for 2GB to download? Our advanced buffer engine lets you start watching high-quality video instantly, directly from the cloud.</p>
-            </div>
+    <!-- FEATURES SECTION (DYNAMICALLY RENDERED FROM JS) -->
+    <section class="py-12 sm:py-20 px-4 sm:px-6 md:px-16 lg:px-24">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <h2 class="text-3xl sm:text-5xl font-black tracking-tight mb-4">POWERFUL <span class="text-purple-500">FEATURES.</span></h2>
+            <p class="text-gray-400 text-sm sm:text-base max-w-lg mx-auto">Everything you need for an ultimate cinema-grade Telegram streaming experience.</p>
+        </div>
+        <div id="features-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <!-- Features populated by JavaScript -->
         </div>
     </section>
 
@@ -199,7 +181,62 @@
     const GITHUB_USERNAME = 'shootinstar000'; 
     const REPO_NAME = 'telePlex_'; 
     const ASSETS_PATH = 'assets';
-    const CACHE_TTL_MINUTES = 15; // Cache responses in local browser memory for 15 minutes
+    const CACHE_TTL_MINUTES = 15;
+
+    // --- APP FEATURES LIST (EDIT FEATURES HERE EASILY) ---
+    const APP_FEATURES = [
+        {
+            icon: "fas fa-clapperboard",
+            title: "TMDB Integration",
+            description: "Automatically fetches movie posters, IMDb ratings, cast details & rich overviews."
+        },
+        {
+            icon: "fas fa-folder-open",
+            title: "Channel Browser",
+            description: "Browse media files from your favorite Telegram groups and channels in a clean UI."
+        },
+        {
+            icon: "fas fa-users",
+            title: "Multi-Profiles",
+            description: "Create custom user profiles with seamless cloud sync across all your devices."
+        },
+        {
+            icon: "fas fa-thumbtack",
+            title: "Pin Favorites",
+            description: "Pin your most watched Telegram channels directly to your app Home screen."
+        },
+        {
+            icon: "fas fa-download",
+            title: "Download Manager",
+            description: "Built-in download engine supporting background pause & resume capabilities."
+        },
+        {
+            icon: "fas fa-circle-play",
+            title: "Media3 & FFmpeg Player",
+            description: "Advanced video engine with support for up to 4K playback and multi-audio."
+        },
+        {
+            icon: "fas fa-moon",
+            title: "Material 3 OLED Mode",
+            description: "Sleek, modern UI design with true black OLED dark theme support."
+        }
+    ];
+
+    // --- RENDER FEATURES GRID ---
+    function renderFeatures() {
+        const grid = document.getElementById('features-grid');
+        if (!grid) return;
+
+        grid.innerHTML = APP_FEATURES.map((f, i) => `
+            <div class="glass-card p-6 sm:p-8 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="${i * 50}">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                    <i class="${f.icon} text-purple-500 text-xl sm:text-2xl"></i>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-3">${f.title}</h3>
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">${f.description}</p>
+            </div>
+        `).join('');
+    }
 
     // --- LOCALSTORAGE CACHE WRAPPER ---
     async function fetchWithCache(url, cacheKey, ttlMinutes = CACHE_TTL_MINUTES) {
@@ -274,14 +311,12 @@
             files.forEach(f => {
                 const fileName = f.name.toLowerCase();
                 if (fileName.match(/\.(png|jpe?g|webp)$/i)) {
-                    // Filter files containing "videoplayer"
                     if (fileName.includes('videoplayer')) {
                         playerSlidesHtml.push(`
                             <div class="swiper-slide">
                                 <img src="${f.download_url}" alt="Player Screenshot" loading="lazy">
                             </div>`);
                     } else {
-                        // Standard app portrait screenshot
                         mainSlidesHtml.push(`
                             <div class="swiper-slide">
                                 <div class="phone-mockup">
@@ -292,7 +327,7 @@
                 }
             });
 
-            // 1. Render Main Portrait Gallery
+            // 1. Render Main Gallery
             if (mainSlidesHtml.length > 0) {
                 mainWrapper.innerHTML = mainSlidesHtml.join('');
                 new Swiper(".mySwiper", {
@@ -309,14 +344,14 @@
                 throw new Error("No main screenshots found");
             }
 
-            // 2. Render Video Player Landscape Carousel (FIXED RE-SLIDE / BLACK SCREEN)
+            // 2. Render Video Player Landscape Carousel
             if (playerSlidesHtml.length > 0) {
                 playerWrapper.innerHTML = playerSlidesHtml.join('');
                 new Swiper(".playerSwiper", {
                     slidesPerView: 1,
                     spaceBetween: 0,
                     grabCursor: true,
-                    loop: playerSlidesHtml.length > 2, // Loop only if there are >2 items to prevent clone rendering bugs
+                    loop: playerSlidesHtml.length > 2,
                     autoplay: { delay: 3200, disableOnInteraction: false },
                 });
             } else {
@@ -333,6 +368,7 @@
     }
 
     // --- INIT ---
+    renderFeatures();
     fetchLatestRelease();
     loadGallery();
     AOS.init({ duration: 800, once: true, disable: 'mobile' });
