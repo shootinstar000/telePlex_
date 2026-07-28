@@ -47,9 +47,9 @@
         }
         .phone-mockup img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Landscape Player Carousel Swiper Styles */
-        .playerSwiper { width: 100%; height: 100%; opacity: 1; padding: 0; }
-        .playerSwiper .swiper-slide { width: 100% !important; filter: none !important; transform: none !important; height: 100%; }
+        /* Landscape Player Carousel Swiper Styles (FIXED) */
+        .playerSwiper { width: 100%; height: 100%; }
+        .playerSwiper .swiper-slide { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .playerSwiper img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
@@ -274,7 +274,7 @@
             files.forEach(f => {
                 const fileName = f.name.toLowerCase();
                 if (fileName.match(/\.(png|jpe?g|webp)$/i)) {
-                    // Check if file name contains "videoplayer" (e.g. videoplayer_1.png, videoplayer.1.png)
+                    // Filter files containing "videoplayer"
                     if (fileName.includes('videoplayer')) {
                         playerSlidesHtml.push(`
                             <div class="swiper-slide">
@@ -309,14 +309,14 @@
                 throw new Error("No main screenshots found");
             }
 
-            // 2. Render Video Player Landscape Carousel
+            // 2. Render Video Player Landscape Carousel (FIXED RE-SLIDE / BLACK SCREEN)
             if (playerSlidesHtml.length > 0) {
                 playerWrapper.innerHTML = playerSlidesHtml.join('');
                 new Swiper(".playerSwiper", {
-                    effect: "fade",
-                    fadeEffect: { crossFade: true },
+                    slidesPerView: 1,
+                    spaceBetween: 0,
                     grabCursor: true,
-                    loop: playerSlidesHtml.length > 1,
+                    loop: playerSlidesHtml.length > 2, // Loop only if there are >2 items to prevent clone rendering bugs
                     autoplay: { delay: 3200, disableOnInteraction: false },
                 });
             } else {
