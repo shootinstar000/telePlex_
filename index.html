@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>telePlex | Streaming Revolutionized</title>
     
+    <!-- OpenGraph / Social Meta Tags -->
+    <meta property="og:title" content="telePlex | Streaming Revolutionized">
+    <meta property="og:description" content="Stream your Telegram channels into a cinema-grade library. Direct streaming, metadata, multi-audio, and subs.">
+    <meta property="og:type" content="website">
+
+    <!-- CSS & Frameworks -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -40,7 +46,7 @@
             <div class="w-8 h-8 btn-purple rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-play text-[10px]"></i></div>
             <span class="text-xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
         </div>
-        <a id="nav-download-link" href="#" class="bg-white text-black px-6 py-2 rounded-full font-bold text-sm pointer-events-auto hover:bg-purple-500 hover:text-white transition-all shadow-lg">Download APK</a>
+        <a id="nav-download-link" href="#download" class="bg-white text-black px-6 py-2 rounded-full font-bold text-sm pointer-events-auto hover:bg-purple-500 hover:text-white transition-all shadow-lg">Download APK</a>
     </nav>
 
     <!-- Header / Hero -->
@@ -116,7 +122,6 @@
             </div>
             <div class="md:w-1/2 glass-card p-3" data-aos="zoom-in">
                 <div class="rounded-[1.8rem] overflow-hidden bg-black aspect-video flex items-center justify-center border border-white/5">
-                   <!-- You can place your player screenshot here -->
                    <p class="text-gray-700 text-xs uppercase tracking-widest italic">Cinema-Grade Video Engine</p>
                 </div>
             </div>
@@ -158,7 +163,7 @@
             <span class="text-2xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
         </div>
         <p class="text-zinc-600 text-xs max-w-lg mx-auto leading-relaxed uppercase tracking-widest">
-            © 2024 telePlex. built for the enthusiasts. we do not host any media; we simply provide the lens.
+            © telePlex. Built for enthusiasts. We do not host any media; we simply provide the lens.
         </p>
     </footer>
 
@@ -167,24 +172,48 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-    // --- 1. CONFIGURATION (CHANGE THESE) ---
+    // --- CONFIGURATION ---
     const GITHUB_USERNAME = 'shootinstar000'; 
     const REPO_NAME = 'telePlex_'; 
     const ASSETS_PATH = 'assets';
+    const CACHE_TTL_MINUTES = 15; // Cache responses in local browser memory for 15 minutes
 
-    // --- 2. DYNAMIC APK FETCHING ---
+    // --- LOCALSTORAGE CACHE WRAPPER ---
+    async function fetchWithCache(url, cacheKey, ttlMinutes = CACHE_TTL_MINUTES) {
+        const cached = localStorage.getItem(cacheKey);
+        const ttlMs = ttlMinutes * 60 * 1000;
+
+        if (cached) {
+            try {
+                const { timestamp, data } = JSON.parse(cached);
+                if (Date.now() - timestamp < ttlMs) {
+                    return data; // Return cached response
+                }
+            } catch (e) {
+                localStorage.removeItem(cacheKey); // Invalidate corrupted cache
+            }
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+        const data = await response.json();
+        localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data }));
+        return data;
+    }
+
+    // --- DYNAMIC APK FETCHING WITH CACHE ---
     async function fetchLatestRelease() {
         const navBtn = document.getElementById('nav-download-link');
         const mainBtn = document.getElementById('main-download-link');
         const versionText = document.getElementById('version-info');
 
         try {
-            const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/releases/latest`);
-            if (!response.ok) throw new Error("Check Releases Section");
-            
-            const data = await response.json();
+            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/releases/latest`;
+            const data = await fetchWithCache(url, 'teleplex_release_cache');
+
             const apkAsset = data.assets.find(a => a.name.endsWith('.apk'));
-            
+
             if (apkAsset) {
                 const downloadUrl = apkAsset.browser_download_url;
                 const ver = data.tag_name;
@@ -194,54 +223,57 @@
                 mainBtn.href = downloadUrl;
                 mainBtn.innerText = `DOWNLOAD ${ver}`;
                 versionText.innerHTML = `${ver} RELEASE • ${size} MB • ANDROID 8.0+`;
+            } else {
+                throw new Error("No APK file found in release assets");
             }
         } catch (e) {
+            const fallback = `https://github.com/${GITHUB_USERNAME}/${REPO_NAME}/releases/latest`;
+            navBtn.href = fallback; 
+            mainBtn.href = fallback;
             mainBtn.innerText = "DOWNLOAD APK";
             versionText.innerText = "LATEST STABLE • ANDROID 8.0+";
-            const fallback = `https://github.com/${GITHUB_USERNAME}/${REPO_NAME}/releases/latest`;
-            navBtn.href = fallback; mainBtn.href = fallback;
         }
     }
 
-    // --- 3. DYNAMIC GALLERY FETCHING ---
+    // --- DYNAMIC GALLERY FETCHING WITH CACHE ---
     async function loadGallery() {
         const wrapper = document.getElementById('carousel-wrapper');
         const container = document.querySelector('.swiper');
-        
+
         try {
-            const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${ASSETS_PATH}`);
-            if (!res.ok) throw new Error();
+            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${ASSETS_PATH}`;
+            const files = await fetchWithCache(url, 'teleplex_gallery_cache');
 
-            const files = await res.json();
-            wrapper.innerHTML = ''; 
-
-            let count = 0;
+            const slidesHtml = [];
             files.forEach(f => {
                 if (f.name.match(/\.(png|jpe?g|webp)$/i)) {
-                    count++;
-                    wrapper.innerHTML += `
+                    slidesHtml.push(`
                         <div class="swiper-slide">
                             <div class="phone-mockup">
-                                <img src="${f.download_url}" alt="App Screen" loading="lazy">
+                                <img src="${f.download_url}" alt="App Screenshot" loading="lazy">
                             </div>
-                        </div>`;
+                        </div>`);
                 }
             });
 
-            if (count > 0) {
+            if (slidesHtml.length > 0) {
+                wrapper.innerHTML = slidesHtml.join('');
+
                 new Swiper(".mySwiper", {
                     effect: "coverflow",
                     grabCursor: true,
                     centeredSlides: true,
                     slidesPerView: "auto",
                     coverflowEffect: { rotate: 12, stretch: 0, depth: 100, modifier: 1, slideShadows: false },
-                    loop: true,
+                    loop: slidesHtml.length > 2, // Enable loop only if enough slides
                     autoplay: { delay: 2800, disableOnInteraction: false },
                 });
                 container.classList.add('loaded');
+            } else {
+                throw new Error("No screenshots found");
             }
         } catch (e) {
-            wrapper.innerHTML = '<p class="text-zinc-800 text-xs py-20 uppercase tracking-[0.4em]">Gallery Offline</p>';
+            wrapper.innerHTML = '<p class="text-zinc-700 text-xs py-20 uppercase tracking-[0.4em] text-center w-full">Gallery Offline</p>';
             container.classList.add('loaded');
         }
     }
