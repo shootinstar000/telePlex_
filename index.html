@@ -27,22 +27,18 @@
         .btn-purple { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); transition: all 0.3s ease; }
         .btn-purple:hover { transform: scale(1.03); box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4); }
 
-        /* Typography Fixes */
         .hero-title { line-height: 0.95; letter-spacing: -0.04em; }
 
-        /* Gallery / Swiper Mobile Responsive Fixes */
-        .swiper { width: 100%; padding-top: 15px; padding-bottom: 40px; opacity: 0; transition: opacity 0.5s ease; }
-        .swiper.loaded { opacity: 1; }
+        /* Main Portrait Gallery Swiper Styles */
+        .mySwiper { width: 100%; padding-top: 15px; padding-bottom: 40px; opacity: 0; transition: opacity 0.5s ease; }
+        .mySwiper.loaded { opacity: 1; }
+        .mySwiper .swiper-slide { width: 210px; filter: blur(1px) grayscale(0.5); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .mySwiper .swiper-slide-active { filter: blur(0px) grayscale(0); transform: scale(1.08); z-index: 10; }
         
-        /* Mobile Slide Size */
-        .swiper-slide { width: 210px; filter: blur(1px) grayscale(0.5); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-        .swiper-slide-active { filter: blur(0px) grayscale(0); transform: scale(1.08); z-index: 10; }
-        
-        /* Tablet & Desktop Slide Size */
         @media (min-width: 640px) {
-            .swiper { padding-top: 20px; padding-bottom: 50px; }
-            .swiper-slide { width: 260px; }
-            .swiper-slide-active { transform: scale(1.15); }
+            .mySwiper { padding-top: 20px; padding-bottom: 50px; }
+            .mySwiper .swiper-slide { width: 260px; }
+            .mySwiper .swiper-slide-active { transform: scale(1.15); }
         }
         
         .phone-mockup { border: 6px solid #111; border-radius: 2.2rem; overflow: hidden; background: #000; aspect-ratio: 9/19; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
@@ -50,6 +46,11 @@
             .phone-mockup { border: 8px solid #111; border-radius: 2.8rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         }
         .phone-mockup img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Landscape Player Carousel Swiper Styles */
+        .playerSwiper { width: 100%; height: 100%; opacity: 1; padding: 0; }
+        .playerSwiper .swiper-slide { width: 100% !important; filter: none !important; transform: none !important; height: 100%; }
+        .playerSwiper img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body class="relative">
@@ -76,7 +77,7 @@
         </p>
     </header>
 
-    <!-- AUTOMATIC GALLERY -->
+    <!-- AUTOMATIC MAIN GALLERY -->
     <section class="pb-10 sm:pb-16 overflow-hidden">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper" id="carousel-wrapper">
@@ -114,7 +115,7 @@
         </div>
     </section>
 
-    <!-- PLAYER FEATURE -->
+    <!-- PLAYER FEATURE SECTION WITH LANDSCAPE CAROUSEL -->
     <section class="py-12 sm:py-20 px-4 sm:px-6 bg-zinc-950/30">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-16">
             <div class="md:w-1/2 w-full" data-aos="fade-right">
@@ -134,9 +135,17 @@
                     </div>
                 </div>
             </div>
+
+            <!-- LANDSCAPE PLAYER CAROUSEL -->
             <div class="md:w-1/2 w-full glass-card p-2 sm:p-3" data-aos="zoom-in">
-                <div class="rounded-[1.2rem] sm:rounded-[1.8rem] overflow-hidden bg-black aspect-video flex items-center justify-center border border-white/5">
-                   <p class="text-gray-700 text-[10px] sm:text-xs uppercase tracking-widest italic text-center px-4">Cinema-Grade Video Engine</p>
+                <div class="rounded-[1.2rem] sm:rounded-[1.8rem] overflow-hidden bg-black aspect-video relative border border-white/5">
+                    <div class="swiper playerSwiper h-full w-full">
+                        <div class="swiper-wrapper" id="player-carousel-wrapper">
+                            <div class="swiper-slide flex items-center justify-center">
+                                <p class="text-gray-700 text-[10px] sm:text-xs uppercase tracking-widest italic text-center px-4">Loading Player Preview...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -249,46 +258,77 @@
         }
     }
 
-    // --- DYNAMIC GALLERY FETCHING WITH CACHE ---
+    // --- DYNAMIC DUAL GALLERY FETCHING WITH CACHE ---
     async function loadGallery() {
-        const wrapper = document.getElementById('carousel-wrapper');
-        const container = document.querySelector('.swiper');
+        const mainWrapper = document.getElementById('carousel-wrapper');
+        const playerWrapper = document.getElementById('player-carousel-wrapper');
+        const mainContainer = document.querySelector('.mySwiper');
 
         try {
             const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${ASSETS_PATH}`;
             const files = await fetchWithCache(url, 'teleplex_gallery_cache');
 
-            const slidesHtml = [];
+            const mainSlidesHtml = [];
+            const playerSlidesHtml = [];
+
             files.forEach(f => {
-                if (f.name.match(/\.(png|jpe?g|webp)$/i)) {
-                    slidesHtml.push(`
-                        <div class="swiper-slide">
-                            <div class="phone-mockup">
-                                <img src="${f.download_url}" alt="App Screenshot" loading="lazy">
-                            </div>
-                        </div>`);
+                const fileName = f.name.toLowerCase();
+                if (fileName.match(/\.(png|jpe?g|webp)$/i)) {
+                    // Check if file name contains "videoplayer" (e.g. videoplayer_1.png, videoplayer.1.png)
+                    if (fileName.includes('videoplayer')) {
+                        playerSlidesHtml.push(`
+                            <div class="swiper-slide">
+                                <img src="${f.download_url}" alt="Player Screenshot" loading="lazy">
+                            </div>`);
+                    } else {
+                        // Standard app portrait screenshot
+                        mainSlidesHtml.push(`
+                            <div class="swiper-slide">
+                                <div class="phone-mockup">
+                                    <img src="${f.download_url}" alt="App Screenshot" loading="lazy">
+                                </div>
+                            </div>`);
+                    }
                 }
             });
 
-            if (slidesHtml.length > 0) {
-                wrapper.innerHTML = slidesHtml.join('');
-
+            // 1. Render Main Portrait Gallery
+            if (mainSlidesHtml.length > 0) {
+                mainWrapper.innerHTML = mainSlidesHtml.join('');
                 new Swiper(".mySwiper", {
                     effect: "coverflow",
                     grabCursor: true,
                     centeredSlides: true,
                     slidesPerView: "auto",
                     coverflowEffect: { rotate: 10, stretch: 0, depth: 80, modifier: 1, slideShadows: false },
-                    loop: slidesHtml.length > 2,
+                    loop: mainSlidesHtml.length > 2,
                     autoplay: { delay: 2800, disableOnInteraction: false },
                 });
-                container.classList.add('loaded');
+                mainContainer.classList.add('loaded');
             } else {
-                throw new Error("No screenshots found");
+                throw new Error("No main screenshots found");
             }
+
+            // 2. Render Video Player Landscape Carousel
+            if (playerSlidesHtml.length > 0) {
+                playerWrapper.innerHTML = playerSlidesHtml.join('');
+                new Swiper(".playerSwiper", {
+                    effect: "fade",
+                    fadeEffect: { crossFade: true },
+                    grabCursor: true,
+                    loop: playerSlidesHtml.length > 1,
+                    autoplay: { delay: 3200, disableOnInteraction: false },
+                });
+            } else {
+                playerWrapper.innerHTML = `
+                    <div class="swiper-slide flex items-center justify-center">
+                        <p class="text-gray-700 text-[10px] sm:text-xs uppercase tracking-widest italic text-center px-4">Cinema-Grade Video Engine</p>
+                    </div>`;
+            }
+
         } catch (e) {
-            wrapper.innerHTML = '<p class="text-zinc-700 text-xs py-16 uppercase tracking-[0.4em] text-center w-full">Gallery Offline</p>';
-            container.classList.add('loaded');
+            mainWrapper.innerHTML = '<p class="text-zinc-700 text-xs py-16 uppercase tracking-[0.4em] text-center w-full">Gallery Offline</p>';
+            mainContainer.classList.add('loaded');
         }
     }
 
