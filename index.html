@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>telePlex | Streaming Revolutionized</title>
     
     <!-- OpenGraph / Social Meta Tags -->
@@ -18,151 +18,165 @@
     
     <style>
         :root { --brand-purple: #7c3aed; --bg-black: #050505; }
-        body { background-color: var(--bg-black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        html, body { background-color: var(--bg-black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100%; }
         
         .text-gradient { background: linear-gradient(to right, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2.5rem; }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.8rem; }
+        @media (min-width: 640px) { .glass-card { border-radius: 2.5rem; } }
+
         .btn-purple { background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%); transition: all 0.3s ease; }
-        .btn-purple:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4); }
+        .btn-purple:hover { transform: scale(1.03); box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4); }
 
-        /* Mobile Optimized Typography */
-        .hero-title { line-height: 0.9; letter-spacing: -0.05em; }
+        /* Typography Fixes */
+        .hero-title { line-height: 0.95; letter-spacing: -0.04em; }
 
-        /* Gallery Styles */
-        .swiper { width: 100%; padding-top: 20px; padding-bottom: 50px; opacity: 0; transition: opacity 0.5s ease; }
+        /* Gallery / Swiper Mobile Responsive Fixes */
+        .swiper { width: 100%; padding-top: 15px; padding-bottom: 40px; opacity: 0; transition: opacity 0.5s ease; }
         .swiper.loaded { opacity: 1; }
-        .swiper-slide { width: 260px; filter: blur(1px) grayscale(0.5); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
-        .swiper-slide-active { filter: blur(0px) grayscale(0); transform: scale(1.15); z-index: 10; }
         
-        .phone-mockup { border: 8px solid #111; border-radius: 2.8rem; overflow: hidden; background: #000; aspect-ratio: 9/19; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        /* Mobile Slide Size */
+        .swiper-slide { width: 210px; filter: blur(1px) grayscale(0.5); transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .swiper-slide-active { filter: blur(0px) grayscale(0); transform: scale(1.08); z-index: 10; }
+        
+        /* Tablet & Desktop Slide Size */
+        @media (min-width: 640px) {
+            .swiper { padding-top: 20px; padding-bottom: 50px; }
+            .swiper-slide { width: 260px; }
+            .swiper-slide-active { transform: scale(1.15); }
+        }
+        
+        .phone-mockup { border: 6px solid #111; border-radius: 2.2rem; overflow: hidden; background: #000; aspect-ratio: 9/19; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        @media (min-width: 640px) {
+            .phone-mockup { border: 8px solid #111; border-radius: 2.8rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        }
         .phone-mockup img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
-<body>
+<body class="relative">
 
     <!-- Nav -->
-    <nav class="fixed w-full z-[100] px-6 py-5 flex justify-between items-center pointer-events-none">
+    <nav class="fixed w-full z-[100] px-4 sm:px-6 py-4 sm:py-5 flex justify-between items-center pointer-events-none backdrop-blur-md sm:backdrop-blur-none bg-black/40 sm:bg-transparent">
         <div class="flex items-center gap-2 pointer-events-auto">
-            <div class="w-8 h-8 btn-purple rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-play text-[10px]"></i></div>
-            <span class="text-xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
+            <div class="w-7 h-7 sm:w-8 sm:h-8 btn-purple rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-play text-[9px] sm:text-[10px]"></i></div>
+            <span class="text-lg sm:text-xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
         </div>
-        <a id="nav-download-link" href="#download" class="bg-white text-black px-6 py-2 rounded-full font-bold text-sm pointer-events-auto hover:bg-purple-500 hover:text-white transition-all shadow-lg">Download APK</a>
+        <a id="nav-download-link" href="#download" class="bg-white text-black px-4 sm:px-6 py-2 rounded-full font-bold text-xs sm:text-sm pointer-events-auto hover:bg-purple-500 hover:text-white transition-all shadow-lg whitespace-nowrap">Download APK</a>
     </nav>
 
     <!-- Header / Hero -->
-    <header class="pt-28 pb-6 text-center px-6">
-        <div class="inline-block px-4 py-1 mb-6 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-400 text-[10px] font-bold uppercase tracking-[0.2em]" data-aos="fade-down">
+    <header class="pt-24 sm:pt-32 pb-6 text-center px-4 sm:px-6 max-w-5xl mx-auto">
+        <div class="inline-block px-3 py-1 mb-4 sm:mb-6 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-400 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em]" data-aos="fade-down">
             The Streaming Revolution
         </div>
-        <h1 class="hero-title text-6xl md:text-8xl font-black mb-6" data-aos="fade-down">
+        <h1 class="hero-title text-4xl sm:text-6xl md:text-8xl font-black mb-4 sm:mb-6" data-aos="fade-down">
             STOP DOWNLOADING.<br><span class="text-gradient">START EXPERIENCING.</span>
         </h1>
-        <p class="text-gray-500 text-base md:text-xl max-w-xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+        <p class="text-gray-400 text-sm sm:text-base md:text-xl max-w-xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
             Your favorite Telegram channels, transformed into a cinema-grade library. Stream instantly with beautiful metadata and a professional player.
         </p>
     </header>
 
     <!-- AUTOMATIC GALLERY -->
-    <section class="pb-16 overflow-hidden">
+    <section class="pb-10 sm:pb-16 overflow-hidden">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper" id="carousel-wrapper">
-                <div class="swiper-slide py-20 text-center text-gray-700 font-mono text-xs uppercase tracking-widest">Initialising Gallery...</div>
+                <div class="swiper-slide py-16 sm:py-20 text-center text-gray-700 font-mono text-xs uppercase tracking-widest">Initialising Gallery...</div>
             </div>
         </div>
     </section>
 
     <!-- FEATURES -->
-    <section class="py-20 px-6 md:px-24">
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="glass-card p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up">
-                <div class="w-14 h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-8 group-hover:scale-110 transition">
-                    <i class="fas fa-folder-open text-purple-500 text-2xl"></i>
+    <section class="py-12 sm:py-20 px-4 sm:px-6 md:px-24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <div class="glass-card p-6 sm:p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition">
+                    <i class="fas fa-folder-open text-purple-500 text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Channel Browser</h3>
-                <p class="text-gray-400 leading-relaxed">Browse every media file from your favorite Telegram groups and channels in a clean, scrollable interface. No more digging through chats.</p>
+                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Channel Browser</h3>
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Browse every media file from your favorite Telegram groups and channels in a clean, scrollable interface. No more digging through chats.</p>
             </div>
             
-            <div class="glass-card p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="100">
-                <div class="w-14 h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-8 group-hover:scale-110 transition">
-                    <i class="fas fa-clapperboard text-purple-500 text-2xl"></i>
+            <div class="glass-card p-6 sm:p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition">
+                    <i class="fas fa-clapperboard text-purple-500 text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Rich Metadata</h3>
-                <p class="text-gray-400 leading-relaxed">Get the full story. telePlex automatically fetches movie posters, IMDb ratings, cast details, and detailed overviews for a premium look.</p>
+                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Rich Metadata</h3>
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Get the full story. telePlex automatically fetches movie posters, IMDb ratings, cast details, and detailed overviews for a premium look.</p>
             </div>
 
-            <div class="glass-card p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="200">
-                <div class="w-14 h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-8 group-hover:scale-110 transition">
-                    <i class="fas fa-bolt text-purple-500 text-2xl"></i>
+            <div class="glass-card p-6 sm:p-10 hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-600/10 flex items-center justify-center mb-6 sm:mb-8 group-hover:scale-110 transition">
+                    <i class="fas fa-bolt text-purple-500 text-xl sm:text-2xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-4">Direct Streaming</h3>
-                <p class="text-gray-400 leading-relaxed">Why wait for 2GB to download? Our advanced buffer engine lets you start watching high-quality video instantly, directly from the cloud.</p>
+                <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Direct Streaming</h3>
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Why wait for 2GB to download? Our advanced buffer engine lets you start watching high-quality video instantly, directly from the cloud.</p>
             </div>
         </div>
     </section>
 
     <!-- PLAYER FEATURE -->
-    <section class="py-20 px-6 bg-zinc-950/30">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
-            <div class="md:w-1/2" data-aos="fade-right">
-                <h2 class="text-4xl md:text-6xl font-black mb-8 italic tracking-tighter">A PLAYER BUILT <br><span class="text-purple-500">FOR CINEPHILES.</span></h2>
-                <div class="space-y-6">
-                    <div class="flex gap-5">
-                        <div class="bg-purple-600/20 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-check text-purple-500 text-xs"></i></div>
-                        <p class="text-gray-400 text-lg"><b>Multi-Audio & Subs:</b> Toggle between languages and load internal or external subtitles seamlessly.</p>
+    <section class="py-12 sm:py-20 px-4 sm:px-6 bg-zinc-950/30">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-16">
+            <div class="md:w-1/2 w-full" data-aos="fade-right">
+                <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mb-6 sm:mb-8 italic tracking-tighter">A PLAYER BUILT <br><span class="text-purple-500">FOR CINEPHILES.</span></h2>
+                <div class="space-y-4 sm:space-y-6">
+                    <div class="flex gap-4 sm:gap-5">
+                        <div class="bg-purple-600/20 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-check text-purple-500 text-[10px] sm:text-xs"></i></div>
+                        <p class="text-gray-400 text-sm sm:text-lg"><b>Multi-Audio & Subs:</b> Toggle between languages and load internal or external subtitles seamlessly.</p>
                     </div>
-                    <div class="flex gap-5">
-                        <div class="bg-purple-600/20 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-check text-purple-500 text-xs"></i></div>
-                        <p class="text-gray-400 text-lg"><b>Modern Gestures:</b> Control volume, brightness, and seek with smooth, intuitive swipe gestures.</p>
+                    <div class="flex gap-4 sm:gap-5">
+                        <div class="bg-purple-600/20 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-check text-purple-500 text-[10px] sm:text-xs"></i></div>
+                        <p class="text-gray-400 text-sm sm:text-lg"><b>Modern Gestures:</b> Control volume, brightness, and seek with smooth, intuitive swipe gestures.</p>
                     </div>
-                    <div class="flex gap-5">
-                        <div class="bg-purple-600/20 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-check text-purple-500 text-xs"></i></div>
-                        <p class="text-gray-400 text-lg"><b>Quality Picker:</b> Select sources from 480p up to 4K based on your network speed.</p>
+                    <div class="flex gap-4 sm:gap-5">
+                        <div class="bg-purple-600/20 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fas fa-check text-purple-500 text-[10px] sm:text-xs"></i></div>
+                        <p class="text-gray-400 text-sm sm:text-lg"><b>Quality Picker:</b> Select sources from 480p up to 4K based on your network speed.</p>
                     </div>
                 </div>
             </div>
-            <div class="md:w-1/2 glass-card p-3" data-aos="zoom-in">
-                <div class="rounded-[1.8rem] overflow-hidden bg-black aspect-video flex items-center justify-center border border-white/5">
-                   <p class="text-gray-700 text-xs uppercase tracking-widest italic">Cinema-Grade Video Engine</p>
+            <div class="md:w-1/2 w-full glass-card p-2 sm:p-3" data-aos="zoom-in">
+                <div class="rounded-[1.2rem] sm:rounded-[1.8rem] overflow-hidden bg-black aspect-video flex items-center justify-center border border-white/5">
+                   <p class="text-gray-700 text-[10px] sm:text-xs uppercase tracking-widest italic text-center px-4">Cinema-Grade Video Engine</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- PRICING HUMOR -->
-    <section class="py-24 px-6">
-        <div class="max-w-5xl mx-auto glass-card p-14 text-center relative overflow-hidden shadow-2xl">
+    <section class="py-16 sm:py-24 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto glass-card p-6 sm:p-14 text-center relative overflow-hidden shadow-2xl">
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-600/10 blur-[60px] rounded-full"></div>
-            <h2 class="text-4xl md:text-6xl font-black mb-10">Pricing? <span class="text-purple-500">Zero.</span></h2>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-10 mb-14">
-                <div class="opacity-20 line-through"><p class="text-xs font-bold tracking-widest uppercase">Netflix</p><p class="text-2xl">$19/mo</p></div>
-                <div class="scale-125 btn-purple px-10 py-6 rounded-[2rem] shadow-2xl border border-white/20">
-                    <p class="text-[10px] font-bold text-purple-200 uppercase tracking-widest mb-1">telePlex</p>
-                    <p class="text-5xl font-black">$0.00</p>
-                    <p class="text-[10px] mt-2 opacity-70">ABSOLUTELY FREE</p>
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-black mb-8 sm:mb-10">Pricing? <span class="text-purple-500">Zero.</span></h2>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 sm:gap-10 mb-8 sm:mb-14">
+                <div class="opacity-30 line-through"><p class="text-[10px] sm:text-xs font-bold tracking-widest uppercase">Netflix</p><p class="text-xl sm:text-2xl">$19/mo</p></div>
+                <div class="scale-105 sm:scale-125 btn-purple px-8 sm:px-10 py-5 sm:py-6 rounded-2xl sm:rounded-[2rem] shadow-2xl border border-white/20 w-full sm:w-auto max-w-xs">
+                    <p class="text-[9px] sm:text-[10px] font-bold text-purple-200 uppercase tracking-widest mb-1">telePlex</p>
+                    <p class="text-4xl sm:text-5xl font-black">$0.00</p>
+                    <p class="text-[9px] sm:text-[10px] mt-1 sm:mt-2 opacity-70">ABSOLUTELY FREE</p>
                 </div>
-                <div class="opacity-20 line-through"><p class="text-xs font-bold tracking-widest uppercase">Prime</p><p class="text-2xl">$15/mo</p></div>
+                <div class="opacity-30 line-through"><p class="text-[10px] sm:text-xs font-bold tracking-widest uppercase">Prime</p><p class="text-xl sm:text-2xl">$15/mo</p></div>
             </div>
-            <p class="text-gray-500 max-w-2xl mx-auto text-lg italic">"We believe in the streaming revolution. No subscriptions, no data-sharing, just your cinema, your way."</p>
+            <p class="text-gray-500 max-w-2xl mx-auto text-sm sm:text-lg italic">"We believe in the streaming revolution. No subscriptions, no data-sharing, just your cinema, your way."</p>
         </div>
     </section>
 
     <!-- CTA -->
-    <section id="download" class="py-32 text-center px-6">
-        <h2 class="text-5xl md:text-7xl font-black mb-10 tracking-tighter" data-aos="zoom-in">GET THE <span class="text-purple-500">APK.</span></h2>
-        <div class="flex flex-col items-center gap-4">
-            <a id="main-download-link" href="#" class="btn-purple px-16 py-6 rounded-3xl font-black text-2xl text-white inline-block shadow-2xl">
+    <section id="download" class="py-20 sm:py-32 text-center px-4 sm:px-6">
+        <h2 class="text-4xl sm:text-5xl md:text-7xl font-black mb-8 sm:mb-10 tracking-tighter" data-aos="zoom-in">GET THE <span class="text-purple-500">APK.</span></h2>
+        <div class="flex flex-col items-center gap-3 sm:gap-4 w-full">
+            <a id="main-download-link" href="#" class="btn-purple w-full max-w-xs sm:max-w-none sm:w-auto px-6 sm:px-16 py-5 sm:py-6 rounded-2xl sm:rounded-3xl font-black text-lg sm:text-2xl text-white inline-block shadow-2xl transition-all">
                FETCHING LATEST...
             </a>
-            <p id="version-info" class="text-zinc-600 font-mono text-xs uppercase tracking-[0.3em] mt-4">Analysing releases...</p>
+            <p id="version-info" class="text-zinc-600 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] mt-2 sm:mt-4">Analysing releases...</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 border-t border-white/5 text-center px-6">
-        <div class="mb-8 opacity-40 flex items-center justify-center gap-2">
-            <span class="text-2xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
+    <footer class="py-12 sm:py-16 border-t border-white/5 text-center px-4 sm:px-6">
+        <div class="mb-6 sm:mb-8 opacity-40 flex items-center justify-center gap-2">
+            <span class="text-xl sm:text-2xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
         </div>
-        <p class="text-zinc-600 text-xs max-w-lg mx-auto leading-relaxed uppercase tracking-widest">
+        <p class="text-zinc-600 text-[10px] sm:text-xs max-w-lg mx-auto leading-relaxed uppercase tracking-widest">
             © telePlex. Built for enthusiasts. We do not host any media; we simply provide the lens.
         </p>
     </footer>
@@ -187,10 +201,10 @@
             try {
                 const { timestamp, data } = JSON.parse(cached);
                 if (Date.now() - timestamp < ttlMs) {
-                    return data; // Return cached response
+                    return data;
                 }
             } catch (e) {
-                localStorage.removeItem(cacheKey); // Invalidate corrupted cache
+                localStorage.removeItem(cacheKey);
             }
         }
 
@@ -264,8 +278,8 @@
                     grabCursor: true,
                     centeredSlides: true,
                     slidesPerView: "auto",
-                    coverflowEffect: { rotate: 12, stretch: 0, depth: 100, modifier: 1, slideShadows: false },
-                    loop: slidesHtml.length > 2, // Enable loop only if enough slides
+                    coverflowEffect: { rotate: 10, stretch: 0, depth: 80, modifier: 1, slideShadows: false },
+                    loop: slidesHtml.length > 2,
                     autoplay: { delay: 2800, disableOnInteraction: false },
                 });
                 container.classList.add('loaded');
@@ -273,7 +287,7 @@
                 throw new Error("No screenshots found");
             }
         } catch (e) {
-            wrapper.innerHTML = '<p class="text-zinc-700 text-xs py-20 uppercase tracking-[0.4em] text-center w-full">Gallery Offline</p>';
+            wrapper.innerHTML = '<p class="text-zinc-700 text-xs py-16 uppercase tracking-[0.4em] text-center w-full">Gallery Offline</p>';
             container.classList.add('loaded');
         }
     }
@@ -281,7 +295,7 @@
     // --- INIT ---
     fetchLatestRelease();
     loadGallery();
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 800, once: true, disable: 'mobile' });
     </script>
 </body>
 </html>
