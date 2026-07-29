@@ -13,7 +13,7 @@
     <!-- CSS & Frameworks -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
@@ -71,7 +71,14 @@
             <div class="w-7 h-7 sm:w-8 sm:h-8 btn-purple rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-play text-[9px] sm:text-[10px]"></i></div>
             <span class="text-lg sm:text-xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
         </div>
-        <a id="nav-download-link" href="#download" class="bg-white text-black px-4 sm:px-6 py-2 rounded-full font-bold text-xs sm:text-sm pointer-events-auto hover:bg-purple-500 hover:text-white transition-all shadow-lg whitespace-nowrap">Download APK</a>
+        
+        <div class="flex items-center gap-3 pointer-events-auto">
+            <!-- Reddit Icon Link -->
+            <a href="https://www.reddit.com/r/telePlex/" target="_blank" rel="noopener noreferrer" title="Join r/telePlex on Reddit" class="w-8 h-8 rounded-full bg-white/5 hover:bg-orange-600/20 border border-white/10 hover:border-orange-500/50 flex items-center justify-center text-gray-400 hover:text-orange-500 transition-all">
+                <i class="fab fa-reddit-alien text-base"></i>
+            </a>
+            <a id="nav-download-link" href="#download" class="bg-white text-black px-4 sm:px-6 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-purple-500 hover:text-white transition-all shadow-lg whitespace-nowrap">Download APK</a>
+        </div>
     </nav>
 
     <!-- Header / Hero -->
@@ -143,6 +150,57 @@
         </div>
     </section>
 
+    <!-- COMMUNITY & REDDIT SECTION -->
+    <section class="py-12 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Reddit Card -->
+            <div class="glass-card p-8 hover:border-orange-500/40 transition-all flex flex-col justify-between group relative overflow-hidden" data-aos="fade-right">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-orange-600/10 blur-3xl rounded-full"></div>
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-orange-600/10 border border-orange-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fab fa-reddit-alien text-orange-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Join r/telePlex</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-6">Connect with other users, request app features, share recommendations, and participate in community discussions on Reddit.</p>
+                </div>
+                <a href="https://www.reddit.com/r/telePlex/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-orange-600 hover:bg-orange-500 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-lg text-sm w-full sm:w-auto">
+                    <i class="fab fa-reddit text-lg"></i>
+                    <span>Visit Reddit Subreddit</span>
+                </a>
+            </div>
+
+            <!-- Telegram Support Card -->
+            <div class="glass-card p-8 hover:border-purple-500/40 transition-all flex flex-col justify-between group relative overflow-hidden" data-aos="fade-left">
+                <div class="absolute -top-12 -right-12 w-32 h-32 bg-purple-600/10 blur-3xl rounded-full"></div>
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
+                        <i class="fab fa-telegram-plane text-purple-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Telegram Support</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-6">Need help or found a bug? Join our official Telegram support channel to get quick assistance directly from the developer.</p>
+                </div>
+                <a href="https://t.me/teleplex_support/2" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 btn-purple text-white font-bold px-6 py-3 rounded-xl transition-all shadow-lg text-sm w-full sm:w-auto">
+                    <i class="fab fa-telegram text-lg"></i>
+                    <span>Telegram Support Group</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION (EXPANDABLE ACCORDION) -->
+    <section class="py-12 sm:py-20 px-4 sm:px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight mb-4">FREQUENTLY ASKED <span class="text-purple-500">QUESTIONS.</span></h2>
+                <p class="text-gray-400 text-sm sm:text-base">Clear answers regarding security, privacy, and how telePlex works.</p>
+            </div>
+            
+            <div id="faq-container" class="space-y-4">
+                <!-- FAQ Items Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
     <!-- PRICING HUMOR -->
     <section class="py-16 sm:py-24 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto glass-card p-6 sm:p-14 text-center relative overflow-hidden shadow-2xl">
@@ -174,7 +232,18 @@
 
     <!-- Footer -->
     <footer class="py-12 sm:py-16 border-t border-white/5 text-center px-4 sm:px-6">
-        <div class="mb-6 sm:mb-8 opacity-40 flex items-center justify-center gap-2">
+        <div class="mb-4 flex items-center justify-center gap-4">
+            <a href="https://www.reddit.com/r/telePlex/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-orange-500 transition-colors text-xl" title="Reddit">
+                <i class="fab fa-reddit-alien"></i>
+            </a>
+            <a href="https://t.me/teleplex_support/2" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-purple-400 transition-colors text-xl" title="Telegram">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="https://github.com/shootinstar000/telePlex_" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors text-xl" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <div class="mb-6 opacity-40 flex items-center justify-center gap-2">
             <span class="text-xl sm:text-2xl font-black tracking-tighter uppercase">tele<span class="text-purple-500">Plex</span></span>
         </div>
         <p class="text-zinc-600 text-[10px] sm:text-xs max-w-lg mx-auto leading-relaxed uppercase tracking-widest">
@@ -193,7 +262,7 @@
     const ASSETS_PATH = 'assets';
     const CACHE_TTL_MINUTES = 15;
 
-    // --- APP FEATURES LIST (EDIT FEATURES HERE EASILY) ---
+    // --- APP FEATURES LIST ---
     const APP_FEATURES = [
         {
             icon: "fas fa-clapperboard",
@@ -232,6 +301,31 @@
         }
     ];
 
+    // --- FREQUENTLY ASKED QUESTIONS (EDIT OR ADD MORE FAQs HERE) ---
+    const APP_FAQS = [
+        {
+            q: "Why Does telePlex require my Phone Number?",
+            a: `
+                <p class="mb-4 leading-relaxed text-gray-300">telePlex uses <b>Telegram's official authentication system</b>, which works the exact same way as the official Telegram app.</p>
+                <p class="mb-4 leading-relaxed text-gray-300">Your mobile number is required because Telegram uses it as your account identifier. Telegram sends a verification code to confirm that you own the account before allowing telePlex to connect.</p>
+                
+                <p class="font-bold text-purple-400 mb-3 text-base">The login process happens directly through Telegram's authentication system:</p>
+                <ul class="space-y-2.5 mb-6 text-gray-300 text-sm sm:text-base">
+                    <li class="flex items-start gap-2.5"><span class="text-base">📱</span> <span><b>Your phone number</b> is used only to identify your Telegram account.</span></li>
+                    <li class="flex items-start gap-2.5"><span class="text-base">🔐</span> <span><b>The verification code</b> is provided directly by Telegram.</span></li>
+                    <li class="flex items-start gap-2.5"><span class="text-base">🚫</span> <span>telePlex <b>never receives or stores</b> your Telegram password.</span></li>
+                    <li class="flex items-start gap-2.5"><span class="text-base">🚫</span> <span>telePlex <b>does not have access</b> to your SMS messages, contacts, or personal data unless you grant explicit permissions.</span></li>
+                    <li class="flex items-start gap-2.5"><span class="text-base">🔒</span> <span>Your credentials are handled securely through <b>Telegram's official API</b>.</span></li>
+                </ul>
+
+                <div class="bg-purple-950/40 border border-purple-500/20 p-5 rounded-2xl">
+                    <h4 class="font-bold text-white mb-2 text-base flex items-center gap-2"><i class="fas fa-shield-halved text-purple-400"></i> In Simple Terms</h4>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">telePlex does not create a separate account system and does not require you to create a new password. It connects to your existing Telegram account using Telegram's official login process, similar to other official client applications. Your media access comes only from Telegram chats, groups, and channels that you already belong to.</p>
+                </div>
+            `
+        }
+    ];
+
     // --- RENDER FEATURES GRID ---
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
@@ -246,6 +340,41 @@
                 <p class="text-gray-400 text-sm sm:text-base leading-relaxed">${f.description}</p>
             </div>
         `).join('');
+    }
+
+    // --- RENDER FAQ ACCORDION ---
+    function renderFaqs() {
+        const container = document.getElementById('faq-container');
+        if (!container) return;
+
+        container.innerHTML = APP_FAQS.map((item, index) => `
+            <div class="glass-card overflow-hidden transition-all duration-300 border border-white/5 hover:border-purple-500/30" data-aos="fade-up">
+                <button onclick="toggleFaq(${index})" class="w-full text-left p-6 sm:p-7 font-bold text-lg sm:text-xl flex justify-between items-center gap-4 focus:outline-none">
+                    <span class="flex items-center gap-3">
+                        <span class="text-purple-500 text-xl">❓</span>
+                        <span>${item.q}</span>
+                    </span>
+                    <i id="faq-icon-${index}" class="fas fa-chevron-down text-purple-400 text-sm transition-transform duration-300 ${index === 0 ? 'rotate-180' : ''}"></i>
+                </button>
+                <div id="faq-ans-${index}" class="px-6 sm:px-7 pb-7 pt-2 text-sm sm:text-base border-t border-white/5 ${index === 0 ? '' : 'hidden'}">
+                    ${item.a}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function toggleFaq(index) {
+        const content = document.getElementById(`faq-ans-${index}`);
+        const icon = document.getElementById(`faq-icon-${index}`);
+        if (!content || !icon) return;
+
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            icon.classList.add('rotate-180');
+        } else {
+            content.classList.add('hidden');
+            icon.classList.remove('rotate-180');
+        }
     }
 
     // --- BUG REPORT BUTTON SCROLL LISTENER ---
@@ -395,6 +524,7 @@
 
     // --- INIT ---
     renderFeatures();
+    renderFaqs();
     setupBugReportScroll();
     fetchLatestRelease();
     loadGallery();
